@@ -1,11 +1,11 @@
 import React from "react";
-import d1 from "./assets/dice1.png";
-import d2 from "./assets/dice2.png";
-import d3 from "./assets/dice3.png";
-import d4 from "./assets/dice4.png";
-import d5 from "./assets/dice5.png";
-import d6 from "./assets/dice6.png";
-import { cn } from "../../lib/utils";
+import d1 from "../assets/dice1.png"
+import d2 from "../assets/dice2.png";
+import d3 from "../assets/dice3.png";
+import d4 from "../assets/dice4.png";
+import d5 from "../assets/dice5.png";
+import d6 from "../assets/dice6.png";
+import { cn } from "../lib/utils";
 
 export interface DiceProps extends React.HTMLAttributes<HTMLDivElement> {
     dice1: number;

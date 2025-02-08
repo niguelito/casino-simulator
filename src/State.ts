@@ -15,7 +15,7 @@ export class State {
     }
 
     public getCollectionValue() {
-        return 1000;
+        return Math.max(1000, Math.floor(0.5 * this.money));
     }
 }
 

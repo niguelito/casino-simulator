@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GameComponentProps } from "../../game";
 import NumberFormatter from "../../lib/NumberFormatter";
-import { CrapsDice } from "./dice";
+import { CrapsDice } from "../../components/dice";
 import { Button } from "../../components/ui/button";
 import CrapsAlgorithm, { CrapsGame, CrapsResult, CrapsRound } from "./CrapsAlgorithm";
 import { BiddingComponent } from "../../components/bidding";
