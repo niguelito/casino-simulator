@@ -1,5 +1,6 @@
 import RoulettePro from 'react-roulette-pro';
 import 'react-roulette-pro/dist/index.css';
+import './wheel.css'
 import prizes from './prizes';
 
 export interface WheelRendererProps {
