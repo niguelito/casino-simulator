@@ -10,7 +10,7 @@ import { CrapsGameC } from './games/craps/craps.tsx';
 import { BlackJackGame } from './games/blackjack/blackjack.tsx';
 import { MinesGame } from './games/mines/mines.tsx';
 
-const ComingSoon: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, save, ...props}) => <h1 className="text-xl" {...props}>Coming Soon</h1>
+const ComingSoon: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => <h1 className="text-xl" {...props}>Coming Soon</h1>
 
 const games: Game[] = [
     { name: "Blackjack", icon: "🃏", component: BlackJackGame },
