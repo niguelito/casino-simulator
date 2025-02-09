@@ -6,6 +6,11 @@ import { Button } from "../../components/ui/button";
 import { BiddingComponent } from "../../components/bidding";
 import { Select } from "../../components/ui/select";
 import NumberFormatter from "../../lib/NumberFormatter";
+import bomb from "./assets/bomb.ogg";
+import diamond from "./assets/diamond.ogg"
+
+const bombSound = new Audio(bomb);
+const diamondSound = new Audio(diamond);
 
 export const MinesGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
     const [bidAmount, setBidAmount] = useState(1);
@@ -24,8 +29,12 @@ export const MinesGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
 
         if (!MinesAlgorithm.hasLost(minefield)) {
             setMultplier(MinesAlgorithm.calculateMultiplier(minefield, risk));
+            diamondSound.pause();
+            diamondSound.currentTime = 0;
+            diamondSound.play();
         } else {
             lose();
+            bombSound.play();
         }
     }
 

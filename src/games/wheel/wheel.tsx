@@ -3,6 +3,11 @@ import { GameComponentProps } from "../../game";
 import { WheelRenderer } from "./renderer";
 import { BiddingComponent } from "../../components/bidding";
 import prizes from "./prizes";
+import spinning from "./assets/spinning.ogg";
+import end from "./assets/end.ogg";
+
+const spinningAudio = new Audio(spinning);
+const endAudio = new Audio(end);
 
 export const WheelGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
     const [roll, setRoll] = useState(false);
@@ -22,6 +27,11 @@ export const WheelGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
         setMoney(getMoney() - betAmount + (betAmount * mul));
         blockInput(false);
 
+        spinningAudio.pause();
+        spinningAudio.currentTime = 0;
+
+        endAudio.play();
+
         if (mul <= 1) setMessage("Oh no! You got " + mul + "x!")
         else setMessage("Congratulations! You won " + mul + "x!")
     }
@@ -32,6 +42,8 @@ export const WheelGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
         blockInput(true);
 
         setMessage("Spinning!")
+
+        spinningAudio.play();
     }
     
     return <div id="wheel" {...props}>

@@ -4,6 +4,9 @@ import { Card } from "../../components/card";
 import { BiddingComponent } from "../../components/bidding";
 import { BlackJackAlgorithm, BlackJackHand, BlackJackResult, DealerAction } from "./BlackJackAlgorithm";
 import { Button } from "../../components/ui/button";
+import cardSound from "./assets/card.ogg";
+
+const cardAudio = new Audio(cardSound);
 
 export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
     const [bidAmount, setBidAmount] = useState(1);
@@ -35,6 +38,8 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
         playerHand.hit();
         setPlayerHand(new BlackJackHand(playerHand.cards));
 
+        cardAudio.play();
+
         if (playerHand.getHandValue() > 21) lose();
         else if (playerHand.getHandValue() == 21) win();
     }
@@ -54,6 +59,8 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
             case DealerAction.HIT:
                 dealerHand.hit();
                 setDealerHand(new BlackJackHand(dealerHand.cards));
+
+                cardAudio.play();
 
                 var nextAction = BlackJackAlgorithm.getDealerAction(dealerHand, playerHand);
                 setMessage("Dealer is " + (nextAction === DealerAction.HIT ? "hitting..." : "standing..."));
@@ -113,7 +120,7 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
             <div className="flex gap-2">
                 <Button hidden={!playerTurn} disabled={!isPlaying} onClick={hit}>Hit</Button>
                 <Button hidden={!playerTurn} disabled={!isPlaying} onClick={stand}>Stand</Button>
-                <Button hidden={playerTurn} onClick={continueGame}>Continue</Button>
+                <Button hidden={playerTurn} disabled={!isPlaying} onClick={continueGame}>Continue</Button>
             </div>
         </div>
 

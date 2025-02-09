@@ -8,6 +8,9 @@ import { BiddingComponent } from "../../components/bidding";
 import rollA from "./assets/dice_roll.ogg";
 import dropA from "./assets/dice_finish.ogg";
 
+const rollAudio = new Audio(rollA);
+const dropAudio = new Audio(dropA);
+
 export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
     var r = CrapsAlgorithm.roll();
     const [dice1, setDice1] = useState(r[0]);
@@ -21,9 +24,6 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, bl
     const [round, setRound] = useState(0);
     const [point, setPoint] = useState(-1);
     const [cont, setCont] = useState(false);
-
-    const rollAudio = new Audio(rollA);
-    const dropAudio = new Audio(dropA);
 
     function roll(r: CrapsRound) {
         blockInput(true);

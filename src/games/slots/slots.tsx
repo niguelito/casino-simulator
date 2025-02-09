@@ -7,6 +7,9 @@ import slotmachine_end from "./assets/slotmachine-end.mp3";
 import NumberFormatter from "../../lib/NumberFormatter";
 import { BiddingComponent } from "../../components/bidding";
 
+const audio = new Audio(slotmachine);
+const finishAudio = new Audio(slotmachine_end);
+
 export const SlotsGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
     const start = SlotsAlgorithm.generate();
     const [slot1, setSlot1] = useState(start[0]);
@@ -17,9 +20,6 @@ export const SlotsGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
     const [bigMsg, setBigMsg] = useState("Spin to Win!");
 
     const [gambleAmount, setGambleAmount] = useState(1);
-
-    const audio = new Audio(slotmachine);
-    const finishAudio = new Audio(slotmachine_end);
 
     function gamble() {
         if (gambleAmount == 0 || gambleAmount > getMoney()) return;
