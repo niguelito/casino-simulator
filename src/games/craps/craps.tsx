@@ -8,7 +8,7 @@ import { BiddingComponent } from "../../components/bidding";
 import rollA from "./assets/dice_roll.ogg";
 import dropA from "./assets/dice_finish.ogg";
 
-export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, save, ...props}) => {
+export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
     var r = CrapsAlgorithm.roll();
     const [dice1, setDice1] = useState(r[0]);
     const [dice2, setDice2] = useState(r[1]);
@@ -61,7 +61,6 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, bl
                     setRound(0);
                     setCont(false);
                     setPoint(-1);
-                    save();
                 }
 
                 switch (r[1]) {

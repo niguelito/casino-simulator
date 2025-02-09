@@ -5,7 +5,7 @@ import { BiddingComponent } from "../../components/bidding";
 import { BlackJackAlgorithm, BlackJackHand, BlackJackResult, DealerAction } from "./BlackJackAlgorithm";
 import { Button } from "../../components/ui/button";
 
-export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, save, ...props}) => {
+export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
     const [bidAmount, setBidAmount] = useState(1);
 
     const [playerHand, setPlayerHand] = useState<BlackJackHand>(BlackJackAlgorithm.generateHand());
@@ -15,16 +15,20 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
 
     const [message, setMessage] = useState("Play to Win!")
 
-    function lose() {
+    function end() {
         setIsPlaying(false);
+    }
+
+    function lose() {
         setMessage("You Lose!")
         setMoney(getMoney() - bidAmount);
+        end();
     }
 
     function win() {
-        setIsPlaying(false);
         setMessage("You Win!")
         setMoney(getMoney() + bidAmount);
+        end();
     }
 
     function hit() {
@@ -65,7 +69,7 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
                 break;
             case BlackJackResult.DRAW:
                 setMessage("Draw!");
-                setIsPlaying(false);
+                end();
                 break;
         }
     }

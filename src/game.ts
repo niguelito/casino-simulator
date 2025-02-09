@@ -4,7 +4,6 @@ export interface GameComponentProps extends React.HTMLAttributes<HTMLDivElement>
     setMoney: (money: number) => void;
     getMoney: () => number;
     exit: () => void;
-    save: () => void;
     blockInput: (bl: boolean) => void;
 }
 

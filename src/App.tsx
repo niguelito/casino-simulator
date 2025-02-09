@@ -17,6 +17,7 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
 
     function setMoney(n: number) {
         setmoney(n);
+        save(new State(n, lastCollected));
     }
 
     function exit() {
@@ -64,7 +65,7 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
                 </div>
                 <div>
                     {game ?
-                        React.createElement<GameComponentProps>(game.component, { setMoney, getMoney: () => money, blockInput, exit, save, className: "flex-grow text-center p-[2%] place-items-center" }) :
+                        React.createElement<GameComponentProps>(game.component, { setMoney, getMoney: () => money, blockInput, exit, className: "flex-grow text-center p-[2%] place-items-center" }) :
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4 select-none px-[10%]">
                             {games.map((game, index) => (
                                 <Card key={index} className="flex flex-col items-center p-4">
