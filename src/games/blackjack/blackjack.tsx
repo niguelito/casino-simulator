@@ -50,26 +50,31 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
     function continueGame() {
         var action = BlackJackAlgorithm.getDealerAction(dealerHand, playerHand);
 
-        if (action === DealerAction.HIT && dealerHand.cards.length === 2) {
-            dealerHand.hit();
-            setDealerHand(new BlackJackHand(dealerHand.cards));
-        }
+        switch (action) {
+            case DealerAction.HIT:
+                dealerHand.hit();
+                setDealerHand(new BlackJackHand(dealerHand.cards));
 
-        var nextAction = BlackJackAlgorithm.getDealerAction(dealerHand, playerHand);
-        setMessage("Dealer is " + (nextAction === DealerAction.HIT ? "standing..." : "standing..."));
+                var nextAction = BlackJackAlgorithm.getDealerAction(dealerHand, playerHand);
+                setMessage("Dealer is " + (nextAction === DealerAction.HIT ? "hitting..." : "standing..."));
+                break;
 
-        var result = BlackJackAlgorithm.getWinner(playerHand, dealerHand);
+            case DealerAction.STAND:
+                var result = BlackJackAlgorithm.getWinner(playerHand, dealerHand);
         
-        switch (result) {
-            case BlackJackResult.PLAYER_WIN:
-                win();
-                break;
-            case BlackJackResult.DEALER_WIN:
-                lose();
-                break;
-            case BlackJackResult.DRAW:
-                setMessage("Draw!");
-                end();
+                switch (result) {
+                    case BlackJackResult.PLAYER_WIN:
+                        win();
+                        break;
+                    case BlackJackResult.DEALER_WIN:
+                        lose();
+                        break;
+                    case BlackJackResult.DRAW:
+                        setMessage("Draw!");
+                        end();
+                        break;
+                }
+
                 break;
         }
     }
