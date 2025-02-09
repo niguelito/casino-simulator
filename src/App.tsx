@@ -93,7 +93,7 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
                     <h1 className="text-4xl font-bold">Casino</h1>
                     <p>Money: ${NumberFormatter.formatText(money)}</p>
 
-                    <Collect lastCollected={lastCollected} collect={collect}></Collect>
+                    <Collect collectAmount={state.getCollectionValue()} lastCollected={lastCollected} collect={collect}></Collect>
                 </div>
                 <div>
                     {game ?
