@@ -1,6 +1,6 @@
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
-import { Gamepad2, Home, Info, User } from "lucide-react";
+import { Download, Gamepad2, Home, User } from "lucide-react";
 import { Game, GameComponentProps } from "./game";
 import React, { useState } from "react";
 import { State, Storage } from "./State";
@@ -44,16 +44,48 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
         document.body.style.overflow = bl ? "hidden" : "auto";
     }
 
+    function download() {
+        let exported = localStorage.getItem(Storage.dataKey);
+        if (!exported) exported = Storage.export(Storage.createNewSave());
+    
+        const blob = new Blob([exported], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'gambling-save.txt';
+        document.body.appendChild(link);
+        link.click();
+        link.remove(); 
+    }
+
+    async function load(e: React.ChangeEvent<HTMLInputElement>) {
+        if ((e.target as HTMLInputElement).files == null) return;
+    
+        const file = ((e.target as HTMLInputElement).files as FileList)[0];
+
+        try {
+            const r = await file.text();
+
+            const s = Storage.parseSave(r, true);
+
+            Storage.save(s);
+
+            document.location.href = './';
+        } catch (err) {
+            alert("This save could not be pased");
+        }
+    }
+
     return <>
         <div className={cn("fixed inset-0 bg-opacity-0 z-50", blockingInput ? "block" : "hidden")} />
         <div className="min-h-screen flex flex-col text-white">
             <nav className="flex justify-between p-4 bg-gray-900 text-white">
-                <h1 className="text-xl font-bold" onClick={exit}>Casino Simulator</h1>
+                <h1 className="text-xl font-bold cursor-pointer" onClick={exit}>Casino Simulator</h1>
                 <div className="flex gap-4">
-                    <Home className="w-6 h-6" onClick={exit} />
-                    <Gamepad2 className="w-6 h-6" />
-                    <Info className="w-6 h-6" />
-                    <User className="w-6 h-6" />
+                    <Home className="w-6 h-6 cursor-pointer" onClick={exit} />
+                    <Gamepad2 className="w-6 h-6 cursor-pointer" />
+                    <Download className="w-6 h-6 cursor-pointer" onClick={download}/>
+                    <input type="file" id="import" className="hidden" onChange={load}></input>
+                    <label className="cursor-pointer" htmlFor="import"><User className="w-6 h-6" /></label>
                 </div>
             </nav>
             <main className="flex-grow">
