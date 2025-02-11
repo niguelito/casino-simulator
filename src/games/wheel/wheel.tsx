@@ -37,6 +37,8 @@ export const WheelGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
     }
 
     function start() {
+        if (betAmount == 0 || betAmount > getMoney()) return;
+
         setRoll(true);
 
         blockInput(true);

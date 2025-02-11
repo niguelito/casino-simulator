@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@tailwind utilities;
+
+@layer utilities {
+    .scratch-text {
+        color: black; 
+        -webkit-text-stroke: 2px white;
+        font-weight: 800;
+        font-size: 4vw;
+        user-select: none;
+    }
+}
