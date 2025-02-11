@@ -9,8 +9,8 @@ type Modifier = {mod: number, weight: number};
 
 export default class ScratchAlgorithm {
     static modifiers: Modifier[] = [
-        {mod: 0.2, weight: 0.2},
-        {mod: 0.5, weight: 0.4},
+        {mod: 0.2, weight: 0.5},
+        {mod: 0.5, weight: 0.6},
         {mod: 1, weight: 0.6},
         {mod: 2, weight: 0.4},
         {mod: 5, weight: 0.1},
