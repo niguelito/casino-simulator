@@ -1,7 +1,8 @@
 import React from "react";
 
 export interface GameComponentProps extends React.HTMLAttributes<HTMLDivElement> {
-    setMoney: (money: number) => void;
+    spendMoney: (money: number) => void;
+    earnMoney: (money: number) => void;
     getMoney: () => number;
     exit: () => void;
     blockInput: (bl: boolean) => void;

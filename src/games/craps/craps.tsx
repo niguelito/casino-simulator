@@ -11,7 +11,7 @@ import dropA from "./assets/dice_finish.ogg";
 const rollAudio = new Audio(rollA);
 const dropAudio = new Audio(dropA);
 
-export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
+export const CrapsGameC: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     var r = CrapsAlgorithm.roll();
     const [dice1, setDice1] = useState(r[0]);
     const [dice2, setDice2] = useState(r[1]);
@@ -65,12 +65,11 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, bl
 
                 switch (r[1]) {
                     case CrapsResult.WIN:
-                        setMoney(getMoney() + bidAmount);
+                        earnMoney(bidAmount * 2);
                         setMessage("You Won!")
                         break;
 
                     case CrapsResult.LOSE:
-                        setMoney(getMoney() - bidAmount);
                         setMessage("You Lost!")
                         break;
 
@@ -88,6 +87,8 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({setMoney, getMoney, bl
 
     function gamble() {
         if (bidAmount == 0 || bidAmount > getMoney()) return;
+
+        spendMoney(bidAmount);
 
         setMessage("Rolling!")
 

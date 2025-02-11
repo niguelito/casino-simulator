@@ -4,7 +4,7 @@ import { ScratchCardRenderer } from "./scratchcard";
 import ScratchAlgorithm, { ScratchData } from "./ScratchAlgorithm";
 import { BiddingComponent } from "../../components/bidding";
 
-export const ScratchGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
+export const ScratchGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     const [card, setCard] = useState(ScratchAlgorithm.createCard());
     const [data, setData] = useState(ScratchAlgorithm.emptyData());
     const [isScratching, setIsScratching] = useState(false);
@@ -24,7 +24,7 @@ export const ScratchGame: React.FC<GameComponentProps> = ({setMoney, getMoney, b
         if (ScratchAlgorithm.isWinRevealed(card, newData)) {
             setIsScratching(false);
             setMessage(`${card.mod > 1 ? "Congratulations!" : "Oh no!"} You scratched a ${card.mod}x multiplier!`);
-            setMoney(getMoney() - bidAmount + bidAmount * card.mod);
+            earnMoney(bidAmount * card.mod);
         }
     }
 
@@ -35,6 +35,8 @@ export const ScratchGame: React.FC<GameComponentProps> = ({setMoney, getMoney, b
         setData(ScratchAlgorithm.emptyData());
         setIsScratching(true);
         setMessage("Scratch to reveal 3 modifiers!");
+
+        spendMoney(bidAmount);
 
         setK(nk => nk + 1);
     }

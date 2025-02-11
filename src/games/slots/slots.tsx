@@ -10,7 +10,7 @@ import { BiddingComponent } from "../../components/bidding";
 const audio = new Audio(slotmachine);
 const finishAudio = new Audio(slotmachine_end);
 
-export const SlotsGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
+export const SlotsGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     const start = SlotsAlgorithm.generate();
     const [slot1, setSlot1] = useState(start[0]);
     const [slot2, setSlot2] = useState(start[1]);
@@ -26,7 +26,7 @@ export const SlotsGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
 
         blockInput(true);
 
-        setMoney(getMoney() - gambleAmount);
+        spendMoney(gambleAmount);
         setSmallMsg("Spinning...");
         setBigMsg("Spinning...");
 
@@ -70,7 +70,7 @@ export const SlotsGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
                 const newAmount = gambleAmount * result;
                 console.log(newAmount);
 
-                setMoney(getMoney() - gambleAmount + newAmount);
+                earnMoney(newAmount);
 
                 audio.pause();
                 audio.currentTime = 0;

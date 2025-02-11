@@ -8,7 +8,7 @@ import cardSound from "./assets/card.ogg";
 
 const cardAudio = new Audio(cardSound);
 
-export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
+export const BlackJackGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     const [bidAmount, setBidAmount] = useState(1);
 
     const [playerHand, setPlayerHand] = useState<BlackJackHand>(BlackJackAlgorithm.generateHand());
@@ -24,13 +24,12 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
 
     function lose() {
         setMessage("You Lose!")
-        setMoney(getMoney() - bidAmount);
         end();
     }
 
     function win() {
         setMessage("You Win!")
-        setMoney(getMoney() + bidAmount);
+        earnMoney(bidAmount);
         end();
     }
 
@@ -88,6 +87,8 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({setMoney, getMoney,
 
     function gamble() {
         if (bidAmount == 0 || bidAmount > getMoney()) return;
+
+        spendMoney(bidAmount);
 
         setPlayerHand(BlackJackAlgorithm.generateHand());
         setDealerHand(BlackJackAlgorithm.generateHand());

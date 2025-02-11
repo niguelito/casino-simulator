@@ -12,7 +12,7 @@ import diamond from "./assets/diamond.ogg"
 const bombSound = new Audio(bomb);
 const diamondSound = new Audio(diamond);
 
-export const MinesGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
+export const MinesGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     const [bidAmount, setBidAmount] = useState(1);
     const [risk, setRisk] = useState(MinefieldRisk.LOW);
 
@@ -44,13 +44,12 @@ export const MinesGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
 
     function lose() {
         setMessage("You Lose!");
-        setMoney(getMoney() - bidAmount);
         end();
     }
 
     function cashOut() {
         setMessage("You won with a multiplier of " + multiplier + "x!");
-        setMoney((getMoney() - bidAmount) + (bidAmount * multiplier));
+        earnMoney(bidAmount * multiplier);
         end();
     }
 
@@ -61,6 +60,8 @@ export const MinesGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
         setIsPlaying(true);
         setMinefield(field);
         setMultplier(MinesAlgorithm.calculateMultiplier(field, risk));
+
+        spendMoney(bidAmount)
     }
 
     return <div id="mines" {...props}>

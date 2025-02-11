@@ -9,7 +9,7 @@ import end from "./assets/end.ogg";
 const spinningAudio = new Audio(spinning);
 const endAudio = new Audio(end);
 
-export const WheelGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blockInput, exit, ...props}) => {
+export const WheelGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     const [roll, setRoll] = useState(false);
     
     const [betAmount, setBetAmount] = useState(1);
@@ -24,7 +24,7 @@ export const WheelGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
         console.log(mul);
 
         setRoll(false);
-        setMoney(getMoney() - betAmount + (betAmount * mul));
+        earnMoney(betAmount * mul);
         blockInput(false);
 
         spinningAudio.pause();
@@ -46,6 +46,8 @@ export const WheelGame: React.FC<GameComponentProps> = ({setMoney, getMoney, blo
         setMessage("Spinning!")
 
         spinningAudio.play();
+
+        spendMoney(betAmount)
     }
     
     return <div id="wheel" {...props}>
