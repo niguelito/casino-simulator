@@ -46,7 +46,7 @@ export const ScratchCardRenderer: React.FC<ScratchCard> = ({ card, onReveal, dis
 
                     for (let x = 0; x < card.length; x++) {
                         for (let y = 0; y < card[x].length; y++) {
-                            elems.push(<ScratchCard width={width} height={height} key={`${x}-${y}`} cover={cube} percent={40} onComplete={() => onReveal(x, y)}>
+                            elems.push(<ScratchCard width={width} height={height} key={`${x}-${y}`} cover={cube} percent={20} onComplete={() => onReveal(x, y)}>
                                 <p className="scratch-text">{card[x][y]}x</p>
                             </ScratchCard>);
                         }
