@@ -92,8 +92,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         // Create walls
         const walls = [
             Bodies.rectangle(500, 1000, 1000, 60, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
-            Bodies.rectangle(0, 500, 150, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
-            Bodies.rectangle(1000, 500, 150, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } })
+            Bodies.rectangle(0, 500, 70, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
+            Bodies.rectangle(1000, 500, 70, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } })
         ];
 
         // Create bins
