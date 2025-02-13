@@ -1,7 +1,8 @@
 import { Engine, Render, World, Bodies, Events, Runner } from "matter-js";
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
-import b02b from "./assets/02b.png"
-import b02d from "./assets/02d.png"
+import b02b from "./assets/02b.png";
+import b02d from "./assets/02d.png";
+import b2 from "./assets/2.png";
 import b4 from "./assets/4.png";
 import b9 from "./assets/9.png";
 import b26 from "./assets/26.png";
@@ -20,8 +21,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [engine, setEngine] = useState<Engine | null>(null);
 
-    const multipliers = [130, 26, 9, 4, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 4, 9, 26, 130];
-    const colors = [b130, b26, b9, b4, b02d, b02d, b02b, b02b, b02b, b02d, b02d, b4, b9, b26, b130];
+    const multipliers = [130, 26, 9, 4, 2, 0.2, 0.2, 0.2, 0.2, 0.2, 2, 4, 9, 26, 130];
+    const colors = [b130, b26, b9, b4, b2, b02d, b02b, b02b, b02b, b02d, b2, b4, b9, b26, b130];
 
     const ballCollision = 0x001;
     const pegsCollision = 0x002;
@@ -64,7 +65,7 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         const pegs = [];
         const minCols = 3;
         const maxCols = 15;
-        const spacing = 50;
+        const spacing = 60;
         const pinSize = 8;
 
         for (let l = minCols; l < maxCols; l++) {
@@ -72,8 +73,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
             const lineWidth = linePins * spacing;
             for (let i = 0; i < linePins; i++) {
                 const pin = Bodies.circle(
-                    500 - lineWidth / 2 + i * spacing + 25,
-                    20 + l * spacing,
+                    500 - lineWidth / 2 + i * spacing + 30,
+                    -50 + l * spacing,
                     pinSize,
                     {
                         render: { fillStyle: "white" },
@@ -89,8 +90,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         // Create walls
         const walls = [
             Bodies.rectangle(500, 1000, 1000, 60, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
-            Bodies.rectangle(0, 500, 70, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
-            Bodies.rectangle(1000, 500, 70, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } })
+            Bodies.rectangle(0, 500, 30, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
+            Bodies.rectangle(1000, 500, 30, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } })
         ];
 
         // Create bins
