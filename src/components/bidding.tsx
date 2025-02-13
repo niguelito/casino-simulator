@@ -26,6 +26,8 @@ export const BiddingComponent: React.FC<BiddingComponentProps> = ({updateAmount,
         <Button variant="secondary" className="m-2" onClick={() => setGambleAmount(getMoney())} disabled={disabled}>All In!</Button>
         <Button variant="primary" className="m-2" onClick={gamble} disabled={disabled}>{gambleText}</Button>
         <Select variant="secondary" className="m-2" disabled={disabled} onClick={(e) => setGambleAmount(Math.floor(getMoney() * parseFloat((e.target as HTMLSelectElement).value)))}>
+            <option value="0.01">1%</option>
+            <option value="0.05">5%</option>
             <option value="0.1">10%</option>
             <option value="0.2">20%</option>
             <option value="0.3">30%</option>
