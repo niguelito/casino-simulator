@@ -7,8 +7,6 @@ import b4 from "./assets/4.png";
 import b9 from "./assets/9.png";
 import b26 from "./assets/26.png";
 import b130 from "./assets/130.png";
-import b500 from "./assets/500.png";
-
 
 export interface PlinkoEngineProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
     onResult: (multiplier: number, bidAmount: number) => void;
@@ -23,8 +21,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [engine, setEngine] = useState<Engine | null>(null);
 
-    const multipliers = [500, 130, 26, 9, 4, 2, 0.2, 0.2, 0.2, 2, 4, 9, 26, 130, 500];
-    const colors = [b500, b130, b26, b9, b4, b2, b02d, b02b, b02d, b2, b4, b9, b26, b130, b500];
+    const multipliers = [130, 26, 9, 4, 2, 0.2, 0.2, 0.2, 0.2, 0.2, 2, 4, 9, 26, 130];
+    const colors = [b130, b26, b9, b4, b2, b02d, b02d, b02b, b02d, b02d, b2, b4, b9, b26, b130];
 
     const ballCollision = 0x001;
     const pegsCollision = 0x002;
