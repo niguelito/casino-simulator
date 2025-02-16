@@ -61,6 +61,6 @@ export default class MinesAlgorithm {
 
         const addition = Math.round((0.1 * (Math.pow(count, Math.max(1, risk - 1)))) * 10) / 10;
 
-        return base + addition;
+        return Math.round((base + addition) * 10) / 10;
     }
 }

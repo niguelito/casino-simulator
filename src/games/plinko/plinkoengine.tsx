@@ -6,14 +6,14 @@ import b2 from "./assets/2.png";
 import b4 from "./assets/4.png";
 import b9 from "./assets/9.png";
 import b26 from "./assets/26.png";
-import b130 from "./assets/130.png";
+import BigNumber from "bignumber.js";
 
 export interface PlinkoEngineProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
-    onResult: (multiplier: number, bidAmount: number) => void;
+    onResult: (multiplier: number, bidAmount: BigNumber) => void;
 }
 
 export interface PlinkoEngineRunner {
-    addBall(bid: number): void;
+    addBall(bid: BigNumber): void;
 }
 
 
@@ -21,8 +21,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [engine, setEngine] = useState<Engine | null>(null);
 
-    const multipliers = [130, 26, 9, 4, 2, 0.2, 0.2, 0.2, 0.2, 0.2, 2, 4, 9, 26, 130];
-    const colors = [b130, b26, b9, b4, b2, b02d, b02b, b02b, b02b, b02d, b2, b4, b9, b26, b130];
+    const multipliers = [26, 9, 4, 2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 2, 4, 9, 26];
+    const colors = [b26, b9, b4, b2, b02d, b02d, b02b, b02b, b02b, b02d, b02d, b2, b4, b9, b26];
 
     const ballCollision = 0x001;
     const pegsCollision = 0x002;
@@ -41,11 +41,11 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
     }
 
     useImperativeHandle(ref, () => ({
-        addBall(bid: number) {
+        addBall(bid: BigNumber) {
             if (!engine) return;
-            const a = `ball-${bid}`;
+            const a = `ball-${bid.toString()}`;
             console.log(a);
-            const ball = Bodies.circle(generateX(), 0, 7, { collisionFilter: { group: ballCollision, mask: pegsCollision | worldCollision }, restitution: 0.3, friction: 0.3, isStatic: false, label: a });
+            const ball = Bodies.circle(generateX(), 0, 6, { collisionFilter: { group: ballCollision, mask: pegsCollision | worldCollision }, restitution: 0.3, friction: 0.3, isStatic: false, label: a });
             World.add(engine.world, ball);
         }
     }));
@@ -120,7 +120,7 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
                     if (pair.bodyA.label.startsWith("bin") || pair.bodyB.label.startsWith("bin")) {
                         const ball = pair.bodyA.label.startsWith("ball") ? pair.bodyA : pair.bodyB;
                         const bin = pair.bodyA.label.startsWith("bin") ? pair.bodyA : pair.bodyB;
-                        const bid = parseFloat(ball.label.split("-")[1]);
+                        const bid = new BigNumber(ball.label.split("-")[1]);
                         const multiplier = parseFloat(bin.label.split("-")[1]);
                         onResult(multiplier, bid);
                         World.remove(engine.world, ball);

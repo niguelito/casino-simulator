@@ -5,6 +5,7 @@ import { BiddingComponent } from "../../components/bidding";
 import prizes from "./prizes";
 import spinning from "./assets/spinning.ogg";
 import end from "./assets/end.ogg";
+import BigNumber from "bignumber.js";
 
 const spinningAudio = new Audio(spinning);
 const endAudio = new Audio(end);
@@ -12,7 +13,7 @@ const endAudio = new Audio(end);
 export const WheelGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     const [roll, setRoll] = useState(false);
     
-    const [betAmount, setBetAmount] = useState(1);
+    const [betAmount, setBetAmount] = useState(new BigNumber(1));
 
     const [message, setMessage] = useState("Spin to Win!")
 
@@ -24,7 +25,7 @@ export const WheelGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
         console.log(mul);
 
         setRoll(false);
-        earnMoney(betAmount * mul);
+        earnMoney(betAmount.mul(mul));
         blockInput(false);
 
         spinningAudio.pause();
@@ -37,7 +38,7 @@ export const WheelGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
     }
 
     function start() {
-        if (betAmount == 0 || betAmount > getMoney()) return;
+        if (betAmount.eq(0) || betAmount.greaterThan(getMoney())) return;
 
         setRoll(true);
 

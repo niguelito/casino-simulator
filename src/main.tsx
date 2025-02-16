@@ -12,6 +12,7 @@ import { MinesGame } from './games/mines/mines.tsx';
 import { WheelGame } from './games/wheel/wheel.tsx';
 import { ScratchGame } from './games/scratch/scratch.tsx';
 import { PlinkoGame } from './games/plinko/plinko.tsx';
+import BigNumber from 'bignumber.js';
 
 // const ComingSoon: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => <h1 className="text-xl" {...props}>Coming Soon</h1>
 
@@ -26,6 +27,16 @@ const games: Game[] = [
 ];
 
 const state = Storage.load();
+
+try {
+    BigNumber.config({
+        DECIMAL_PLACES: 40,
+        RANGE: [-30, 5000]
+    });
+} catch (err) {
+    console.error("BigNumber is being stupid");
+    console.error(err);
+}
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

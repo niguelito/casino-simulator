@@ -1,11 +1,11 @@
 import crypto from 'crypto-js';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
+import BigNumber from 'bignumber.js';
 
 export class State {
-    public money: number;
+    public money: BigNumber;
     public lastCollected: number;
 
-    constructor(money: number, lastCollected: number) {
+    constructor(money: BigNumber, lastCollected: number) {
         this.money = money;
         this.lastCollected = lastCollected;
     }
@@ -14,8 +14,9 @@ export class State {
         return 1000 * 60 * 60 * 24;
     }
 
-    public getCollectionValue() {
-        return Math.max(1000, Math.floor(0.5 * this.money));
+    public getCollectionValue(): BigNumber {
+        var a = this.money.mul(0.5);
+        return a.greaterThanOrEqualTo(1000) ? a : new BigNumber(1000);
     }
 }
 
@@ -24,7 +25,7 @@ export class Storage {
     public static readonly dataKey = "gamblingdataebf4c5f2a";
 
     public static createNewSave(): State {
-        return new State(0, 0);
+        return new State(new BigNumber(0), 0);
     }
 
     private static encrypt(d: string): string {
@@ -46,11 +47,26 @@ export class Storage {
         }
     }
 
+    private static roundIf(a: number | string): number | string {
+        try {
+            return (a as number).toString();
+        } catch (ignored) {
+            return a;
+        }
+    }
+
+    private static resolveOrZeroBig(a: string | number | undefined): BigNumber {
+        return a ? new BigNumber(this.roundIf(a)) : new BigNumber(0);
+    }
+
     public static parseSave(s: string, willHandleError?: boolean): State {
         try {
-            const r = this.decrypt(s);
+            const r = JSON.parse(this.decrypt(s));
             console.log(r);
-            return plainToInstance(State, JSON.parse(r) as Object);
+            return new State(
+                this.resolveOrZeroBig(r.money),
+                this.resolveOrZero(r.lastCollected)
+            );
         } catch (err) {
             console.error(err);
             if (willHandleError) throw new Error("Could not parse save!")
@@ -59,7 +75,7 @@ export class Storage {
     }
 
     public static export(state: State): string {
-        const s = JSON.stringify(instanceToPlain(state));
+        const s = JSON.stringify({ money: state.money.toString(), lastCollected: state.lastCollected });
         const e = this.encrypt(s);
         console.log(e);
         return e;
@@ -85,7 +101,7 @@ export class Storage {
 
                 return p;
             }
-        } catch(err) {
+        } catch (err) {
             console.error(err);
             return this.createNewSave();
         }

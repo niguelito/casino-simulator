@@ -7,6 +7,7 @@ import CrapsAlgorithm, { CrapsGame, CrapsResult, CrapsRound } from "./CrapsAlgor
 import { BiddingComponent } from "../../components/bidding";
 import rollA from "./assets/dice_roll.ogg";
 import dropA from "./assets/dice_finish.ogg";
+import BigNumber from "bignumber.js";
 
 const rollAudio = new Audio(rollA);
 const dropAudio = new Audio(dropA);
@@ -18,7 +19,7 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({spendMoney, earnMoney,
 
     const [message, setMessage] = useState("Roll to Win!")
 
-    const [bidAmount, setBidAmount] = useState(1);
+    const [bidAmount, setBidAmount] = useState(new BigNumber(1));
 
     const [game, setGame] = useState<CrapsGame | null>(null);
     const [round, setRound] = useState(0);
@@ -65,7 +66,7 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({spendMoney, earnMoney,
 
                 switch (r[1]) {
                     case CrapsResult.WIN:
-                        earnMoney(bidAmount * 2);
+                        earnMoney(bidAmount.mul(2));
                         setMessage("You Won!")
                         break;
 
@@ -86,7 +87,7 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({spendMoney, earnMoney,
     }
 
     function gamble() {
-        if (bidAmount == 0 || bidAmount > getMoney()) return;
+        if (bidAmount.eq(0) || bidAmount.greaterThan(getMoney())) return;
 
         spendMoney(bidAmount);
 

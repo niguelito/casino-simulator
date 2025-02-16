@@ -3,29 +3,33 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Select } from "./ui/select";
 import { cn } from "../lib/utils";
+import BigNumber from "bignumber.js";
 
 export interface BiddingComponentProps extends React.HTMLAttributes<HTMLDivElement> {
-    updateAmount: (n: number) => void;
+    updateAmount: (n: BigNumber) => void;
     gamble: () => void;
     gambleText?: string;
-    getMoney: () => number;
+    getMoney: () => BigNumber;
     disabled?: boolean;
 }
 
 export const BiddingComponent: React.FC<BiddingComponentProps> = ({updateAmount, gamble, gambleText = "Gamble!", getMoney, disabled = false, className, children, ...props}) => {
-    const [gambleAmount, setgambleAmount] = useState(1);
+    const [gambleAmount, setgambleAmount] = useState("1");
 
-    function setGambleAmount(n: number) {
-        setgambleAmount(n);
-        updateAmount(n);
+    function setGambleAmount(s: string) {
+        try {
+            var n = new BigNumber(s);
+            setgambleAmount(s);
+            updateAmount(n);
+        } catch (ignored) {}
     }
 
     return <div className={cn(className, "p-2")} {...props}>
-        <Input type="number" className="w-40" value={gambleAmount} disabled={disabled} onChange={(e) => setGambleAmount(parseInt(e.target.value))}></Input>
+        <Input type="text" className="w-40" value={gambleAmount} disabled={disabled} onChange={(e) => setGambleAmount(e.target.value)}></Input>
         <br />
-        <Button variant="secondary" className="m-2" onClick={() => setGambleAmount(getMoney())} disabled={disabled}>All In!</Button>
+        <Button variant="secondary" className="m-2" onClick={() => setGambleAmount(getMoney().toString())} disabled={disabled}>All In!</Button>
         <Button variant="primary" className="m-2" onClick={gamble} disabled={disabled}>{gambleText}</Button>
-        <Select variant="secondary" className="m-2" disabled={disabled} onClick={(e) => setGambleAmount(Math.floor(getMoney() * parseFloat((e.target as HTMLSelectElement).value)))}>
+        <Select variant="secondary" className="m-2" disabled={disabled} onClick={(e) => setGambleAmount(getMoney().mul(parseFloat((e.target as HTMLSelectElement).value)).toString())}>
             <option value="0.01">1%</option>
             <option value="0.05">5%</option>
             <option value="0.1">10%</option>

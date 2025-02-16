@@ -8,12 +8,13 @@ import { Select } from "../../components/ui/select";
 import NumberFormatter from "../../lib/NumberFormatter";
 import bomb from "./assets/bomb.ogg";
 import diamond from "./assets/diamond.ogg"
+import BigNumber from "bignumber.js";
 
 const bombSound = new Audio(bomb);
 const diamondSound = new Audio(diamond);
 
 export const MinesGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
-    const [bidAmount, setBidAmount] = useState(1);
+    const [bidAmount, setBidAmount] = useState(new BigNumber(1));
     const [risk, setRisk] = useState(MinefieldRisk.LOW);
 
     const [minefield, setMinefield] = useState<Minefield>(MinesAlgorithm.generateMinefield(MinefieldRisk.LOW));
@@ -49,12 +50,12 @@ export const MinesGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
 
     function cashOut() {
         setMessage("You won with a multiplier of " + multiplier + "x!");
-        earnMoney(bidAmount * multiplier);
+        earnMoney(bidAmount.mul(multiplier));
         end();
     }
 
     function start() {
-        if (bidAmount == 0 || bidAmount > getMoney()) return;
+        if (bidAmount.eq(0) || bidAmount.greaterThan(getMoney())) return;
 
         var field = MinesAlgorithm.generateMinefield(risk);
         setIsPlaying(true);

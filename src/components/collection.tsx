@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import NumberFormatter from "../lib/NumberFormatter";
+import BigNumber from "bignumber.js";
 
 export interface CollectionProps {
     lastCollected: number;
-    collectAmount: number;
+    collectAmount: BigNumber;
     collect: () => number;
 }
 

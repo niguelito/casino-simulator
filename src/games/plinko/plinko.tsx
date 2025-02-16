@@ -2,16 +2,17 @@ import React, { useRef, useState } from "react";
 import { GameComponentProps } from "../../game";
 import { PlinkoEngine, PlinkoEngineRunner } from "./plinkoengine";
 import { BiddingComponent } from "../../components/bidding";
+import BigNumber from "bignumber.js";
 
 export const PlinkoGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
     const engine = useRef<PlinkoEngineRunner>(null);
     
-    const [bidAmount, setBidAmount] = useState(1);
+    const [bidAmount, setBidAmount] = useState(new BigNumber(1));
 
     const [multipliers, setMultipliers] = useState<string[]>(["Drop balls to win!"]);
 
-    function onResult(mul: number, bidAmount: number) {
-        earnMoney(bidAmount * mul);
+    function onResult(mul: number, bidAmount: BigNumber) {
+        earnMoney(bidAmount.mul(mul));
         console.log("earn money");
 
         setMultipliers(Mul => {
@@ -27,7 +28,7 @@ export const PlinkoGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney,
     }
 
     function addBall() {
-        if (bidAmount == 0 || bidAmount > getMoney()) return;
+        if (bidAmount.eq(0) || bidAmount.greaterThan(getMoney())) return;
 
         spendMoney(bidAmount);
         engine.current?.addBall(bidAmount);

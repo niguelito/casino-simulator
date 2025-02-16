@@ -7,25 +7,27 @@ import { State, Storage } from "./State";
 import { Collect } from "./components/collection";
 import { cn } from "./lib/utils";
 import NumberFormatter from "./lib/NumberFormatter";
+import BigNumber from "bignumber.js";
 
 
 const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) => {
     const [game, setGame] = useState<Game | null>(null)
-    const [money, setMoney] = useState<number>(state.money);
+    const [money, setMoney] = useState<BigNumber>(state.money);
     const [lastCollected, setLastCollected] = useState<number>(state.lastCollected);
     const [blockingInput, setBlockInput] = useState(false);
 
-    function spendMoney(n: number) {
-        setMoney((m) => m - n);
-        save(new State(money - n, lastCollected));
+    function spendMoney(n: BigNumber) {
+        setMoney((m) => m.sub(n));
+        save(new State(money.sub(n), lastCollected));
     }
 
-    function earnMoney(n: number) {
-        setMoney((m) => m + n);
-        save(new State(money + n, lastCollected));
+    function earnMoney(n: BigNumber) {
+        setMoney((m) => m.add(n));
+        save(new State(money.add(n), lastCollected));
     }
 
     function exit() {
+        setGame(null);
         setGame(null);
         save();
     }
@@ -37,7 +39,7 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
 
     function collect() {
         var l = Date.now() + state.getCollectionInterval();
-        var s = money + state.getCollectionValue();
+        var s = money.add(state.getCollectionValue());
         setLastCollected(l);
         setMoney(s);
         save(new State(s, l));

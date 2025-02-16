@@ -5,11 +5,12 @@ import { BiddingComponent } from "../../components/bidding";
 import { BlackJackAlgorithm, BlackJackHand, BlackJackResult, DealerAction } from "./BlackJackAlgorithm";
 import { Button } from "../../components/ui/button";
 import cardSound from "./assets/card.ogg";
+import BigNumber from "bignumber.js";
 
 const cardAudio = new Audio(cardSound);
 
 export const BlackJackGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => {
-    const [bidAmount, setBidAmount] = useState(1);
+    const [bidAmount, setBidAmount] = useState(new BigNumber(1));
 
     const [playerHand, setPlayerHand] = useState<BlackJackHand>(BlackJackAlgorithm.generateHand());
     const [dealerHand, setDealerHand] = useState<BlackJackHand>(BlackJackAlgorithm.generateHand());
@@ -86,7 +87,7 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({spendMoney, earnMon
     }
 
     function gamble() {
-        if (bidAmount == 0 || bidAmount > getMoney()) return;
+        if (bidAmount.eq(0) || bidAmount.greaterThan(getMoney())) return;
 
         spendMoney(bidAmount);
 
