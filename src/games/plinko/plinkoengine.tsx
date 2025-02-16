@@ -1,5 +1,6 @@
 import { Engine, Render, World, Bodies, Events, Runner } from "matter-js";
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
+import b0 from "./assets/0.png";
 import b02b from "./assets/02b.png";
 import b02d from "./assets/02d.png";
 import b2 from "./assets/2.png";
@@ -21,8 +22,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [engine, setEngine] = useState<Engine | null>(null);
 
-    const multipliers = [26, 9, 4, 2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 2, 4, 9, 26];
-    const colors = [b26, b9, b4, b2, b02d, b02d, b02b, b02b, b02b, b02d, b02d, b2, b4, b9, b26];
+    const multipliers = [26, 9, 4, 2, 0.2, 0.2, 0, 0, 0, 0.2, 0.2, 2, 4, 9, 26];
+    const colors = [b26, b9, b4, b2, b02d, b02b, b0, b0, b0, b02b, b02d, b2, b4, b9, b26];
 
     const ballCollision = 0x001;
     const pegsCollision = 0x002;
