@@ -41,6 +41,19 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         }
     }
 
+    function generateWall(): number {
+        while (true) {
+            var n = 450;
+            const randomNumber = Math.floor(Math.random() * n);
+            const distanceFromCenter = Math.abs(randomNumber - n);
+            const probability = Math.exp(-distanceFromCenter / 50);
+
+            if (Math.random() < probability) {
+                return randomNumber;
+            }
+        }
+    }
+
     useImperativeHandle(ref, () => ({
         addBall(bid: BigNumber) {
             if (!engine) return;
@@ -89,10 +102,11 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         }
 
         // Create walls
+        const r = generateWall();
         const walls = [
-            Bodies.rectangle(500, 1000, 1000, 60, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
-            Bodies.rectangle(0, 500, 30, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
-            Bodies.rectangle(1000, 500, 30, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } })
+            Bodies.rectangle(500, 1000, 1000, 60, { isStatic: true, render: { visible: true }, collisionFilter: { group: worldCollision } }),
+            Bodies.rectangle(0, 500, r, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
+            Bodies.rectangle(1000, 500, r, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } })
         ];
 
         // Create bins
