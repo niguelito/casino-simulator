@@ -80,7 +80,7 @@ export const MinesGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
 
         <BiddingComponent updateAmount={setBidAmount} gamble={start} getMoney={getMoney} gambleText="Bid!" className="m-5" disabled={isPlaying}>
             <p>Risk: </p>
-            <Select onClick={(e) => {setRisk(parseInt((e.target as HTMLSelectElement).value))}}>
+            <Select onChange={(e) => {setRisk(parseInt((e.target as HTMLSelectElement).value))}}>
                 <option value={MinefieldRisk.LOW}>Low</option>
                 <option value={MinefieldRisk.MEDIUM}>Medium</option>
                 <option value={MinefieldRisk.HIGH}>High</option>

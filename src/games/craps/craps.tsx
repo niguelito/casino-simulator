@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { GameComponentProps } from "../../game";
 import NumberFormatter from "../../lib/NumberFormatter";
-import { CrapsDice } from "../../components/dice";
 import { Button } from "../../components/ui/button";
 import CrapsAlgorithm, { CrapsGame, CrapsResult, CrapsRound } from "./CrapsAlgorithm";
 import { BiddingComponent } from "../../components/bidding";
 import rollA from "./assets/dice_roll.ogg";
 import dropA from "./assets/dice_finish.ogg";
 import BigNumber from "bignumber.js";
+import { Dice } from "../../components/dice";
 
 const rollAudio = new Audio(rollA);
 const dropAudio = new Audio(dropA);
@@ -105,7 +105,10 @@ export const CrapsGameC: React.FC<GameComponentProps> = ({spendMoney, earnMoney,
         <p>Money: ${NumberFormatter.formatText(getMoney())}</p>
 
         <div className="m-10">
-            <CrapsDice dice1={dice1} dice2={dice2}></CrapsDice><br></br>
+            <div className="flex flex-row justify-center items-center">
+                <Dice className="w-[20%]" dice={dice1}></Dice>
+                <Dice className="w-[20%]" dice={dice2}></Dice>
+            </div><br></br>
             <Button variant="primary" hidden={!cont} onClick={() => roll((game as CrapsGame).rounds[round])}>Continue</Button>
             <p hidden={point == -1}>Point: {point}</p>
             <p>{message}</p>
