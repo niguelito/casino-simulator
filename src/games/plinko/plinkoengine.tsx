@@ -46,7 +46,7 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
             var n = 450;
             const randomNumber = Math.floor(Math.random() * n);
             const distanceFromCenter = Math.abs(randomNumber - n);
-            const probability = Math.exp(-distanceFromCenter / 50);
+            const probability = Math.exp(-distanceFromCenter / 2);
 
             if (Math.random() < probability) {
                 return randomNumber;
