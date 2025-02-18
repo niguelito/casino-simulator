@@ -87,6 +87,76 @@ export default class SlotsAlgorithm {
             id: 19
         },
         {
+            symbol: "🍭",
+            status: SymbolStatus.MATCHING,
+            id: 20
+        },
+        {
+            symbol: "⚽️",
+            status: SymbolStatus.MATCHING,
+            id: 21
+        },
+        {
+            symbol: "🏀",
+            status: SymbolStatus.MATCHING,
+            id: 22
+        },
+        {
+            symbol: "🎱",
+            status: SymbolStatus.MATCHING,
+            id: 23
+        },
+        {
+            symbol: "🎳",
+            status: SymbolStatus.MATCHING,
+            id: 24
+        },
+        {
+            symbol: "🏐",
+            status: SymbolStatus.MATCHING,
+            id: 25
+        },
+        {
+            symbol: "🥦",
+            status: SymbolStatus.MATCHING,
+            id: 26
+        },
+        {
+            symbol: "🥬",
+            status: SymbolStatus.MATCHING,
+            id: 27
+        },
+        {
+            symbol: "🍊",
+            status: SymbolStatus.MATCHING,
+            id: 28
+        },
+        {
+            symbol: "🥐",
+            status: SymbolStatus.MATCHING,
+            id: 29
+        },
+        {
+            symbol: "🍉",
+            status: SymbolStatus.MATCHING,
+            id: 30
+        },
+        {
+            symbol: "🥑",
+            status: SymbolStatus.MATCHING,
+            id: 31
+        },
+        {
+            symbol: "🫑",
+            status: SymbolStatus.MATCHING,
+            id: 32
+        },
+        {
+            symbol: "🥞",
+            status: SymbolStatus.MATCHING,
+            id: 33
+        },
+        {
             symbol: "⚀",
             status: SymbolStatus.DICE,
             id: 10,
