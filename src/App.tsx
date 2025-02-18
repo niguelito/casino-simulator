@@ -48,7 +48,7 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
 
     function blockInput(bl: boolean) {
         setBlockInput(bl);
-        document.body.style.overflow = bl ? "hidden" : "auto";
+        // document.body.style.overflow = bl ? "hidden" : "auto";
     }
 
     function download() {

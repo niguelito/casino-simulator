@@ -20,12 +20,15 @@ export const SlotsGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
     const [smallMsg, setSmallMsg] = useState("Spin to Win!");
     const [bigMsg, setBigMsg] = useState("Spin to Win!");
 
+    const [isGambling, setIsGambling] = useState(false);
+
     const [gambleAmount, setGambleAmount] = useState(new BigNumber(1));
 
     function gamble() {
         if (gambleAmount.eq(0) || gambleAmount.greaterThan(getMoney())) return;
 
         blockInput(true);
+        setIsGambling(true);
 
         spendMoney(gambleAmount);
         setSmallMsg("Spinning...");
@@ -79,6 +82,7 @@ export const SlotsGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
                 finishAudio.play();
 
                 blockInput(false);
+                setIsGambling(false);
             }
         }, 50);
     }
@@ -88,7 +92,7 @@ export const SlotsGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
         <h2 className="font-bold text-xl">Slots</h2>
         <p>Money: ${NumberFormatter.formatText(getMoney())}</p>
 
-        <BiddingComponent updateAmount={setGambleAmount} gamble={gamble} getMoney={getMoney}>
+        <BiddingComponent updateAmount={setGambleAmount} gamble={gamble} getMoney={getMoney} disabled={isGambling}>
             <p className="m-4">{bigMsg}</p>
         </BiddingComponent>
     </div>);
