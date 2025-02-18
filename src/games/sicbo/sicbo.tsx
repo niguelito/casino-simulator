@@ -29,7 +29,7 @@ export const SicBoGame: React.FC<GameComponentProps> = ({spendMoney, earnMoney, 
     function start() {
         if (betAmount.eq(0) || betAmount.greaterThan(getMoney())) return;
         if (isNaN(diceBets[0]) || isNaN(diceBets[1])) return;
-        if (diceBets[0] == diceBets[1]) return;
+        if (diceBets[0] == diceBets[1] && SicboAlgorithm.hasTwoBets(betType)) return;
 
         spendMoney(betAmount);
 

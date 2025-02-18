@@ -29,7 +29,7 @@ export const BiddingComponent: React.FC<BiddingComponentProps> = ({updateAmount,
         <br />
         <Button variant="secondary" className="m-2" onClick={() => setGambleAmount(getMoney().toString())} disabled={disabled}>All In!</Button>
         <Button variant="primary" className="m-2" onClick={gamble} disabled={disabled}>{gambleText}</Button>
-        <Select variant="secondary" className="m-2" disabled={disabled} onChange={(e) => setGambleAmount(getMoney().mul(parseFloat((e.target as HTMLSelectElement).value)).toString())}>
+        <Select variant="secondary" className="m-2" disabled={disabled} onClick={(e) => setGambleAmount(getMoney().mul(parseFloat((e.target as HTMLSelectElement).value)).toString())}>
             <option value="0.01">1%</option>
             <option value="0.05">5%</option>
             <option value="0.1">10%</option>
