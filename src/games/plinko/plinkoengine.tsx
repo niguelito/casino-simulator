@@ -1,4 +1,4 @@
-import { Engine, Render, World, Bodies, Events, Runner } from "matter-js";
+import { Engine, Render, World, Bodies, Events, Runner, Body } from "matter-js";
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
 import b0 from "./assets/0.png";
 import b02b from "./assets/02b.png";
@@ -41,25 +41,25 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         }
     }
 
-    function generateWall(): number {
-        while (true) {
-            var n = 450;
-            const randomNumber = Math.floor(Math.random() * n);
-            const distanceFromCenter = Math.abs(randomNumber - n);
-            const probability = Math.exp(-distanceFromCenter / 2);
+    // function generateWall(): number {
+    //     while (true) {
+    //         var n = 450;
+    //         const randomNumber = Math.floor(Math.random() * n);
+    //         const distanceFromCenter = Math.abs(randomNumber - n);
+    //         const probability = Math.exp(-distanceFromCenter / 5);
 
-            if (Math.random() < probability) {
-                return randomNumber;
-            }
-        }
-    }
+    //         if (Math.random() < probability) {
+    //             return randomNumber;
+    //         }
+    //     }
+    // }
 
     useImperativeHandle(ref, () => ({
         addBall(bid: BigNumber) {
             if (!engine) return;
             const a = `ball-${bid.toString()}`;
             console.log(a);
-            const ball = Bodies.circle(generateX(), 0, 6, { collisionFilter: { group: ballCollision, mask: pegsCollision | worldCollision }, restitution: 0.3, friction: 0.3, isStatic: false, label: a });
+            const ball = Bodies.circle(generateX(), 0, 10, { collisionFilter: { group: ballCollision, mask: pegsCollision | worldCollision }, restitution: 0.3, friction: 7, isStatic: false, label: a });
             World.add(engine.world, ball);
         }
     }));
@@ -78,8 +78,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         // Create pegs in a triangular formation
         const pegs = [];
         const minCols = 3;
-        const maxCols = 15;
-        const spacing = 60;
+        const maxCols = 17;
+        const spacing = 50;
         const pinSize = 8;
 
         for (let l = minCols; l < maxCols; l++) {
@@ -94,7 +94,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
                         render: { fillStyle: "white" },
                         isStatic: true,
                         friction: 1,
-                        collisionFilter: { group: pegsCollision }
+                        collisionFilter: { group: pegsCollision },
+                        label: "peg"
                     }
                 );
                 pegs.push(pin);
@@ -102,9 +103,9 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         }
 
         // Create walls
-        const r = generateWall();
+        const r = 40;
         const walls = [
-            Bodies.rectangle(500, 1000, 1000, 60, { isStatic: true, render: { visible: true }, collisionFilter: { group: worldCollision } }),
+            Bodies.rectangle(500, 1000, 1000, 60, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
             Bodies.rectangle(0, 500, r, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } }),
             Bodies.rectangle(1000, 500, r, 1000, { isStatic: true, render: { visible: false }, collisionFilter: { group: worldCollision } })
         ];
@@ -143,6 +144,16 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
                 }
             }
         });
+
+        Events.on(engine, "afterTick", (e) => {
+            World.allBodies(engine.world).forEach(body => {
+                if (body.label.startsWith("ball")) {
+                    const force = body.position.x <= 500 ? 50000 : -50000;
+
+                    Body.applyForce(body, { x: 500, y: 500 }, { x: force, y: 0 })
+                }
+            })
+        })
 
         return () => {
             Render.stop(render);
