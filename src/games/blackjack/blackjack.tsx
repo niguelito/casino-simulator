@@ -30,7 +30,7 @@ export const BlackJackGame: React.FC<GameComponentProps> = ({spendMoney, earnMon
 
     function win() {
         setMessage("You Win!")
-        earnMoney(bidAmount);
+        earnMoney(bidAmount.mul(2));
         end();
     }
 
