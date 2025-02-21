@@ -111,7 +111,7 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
                         React.createElement<GameComponentProps>(game.component, { spendMoney, earnMoney, getMoney: () => money, blockInput, exit, className: "flex flex-grow flex-col text-center p-[2%] place-items-center" }) :
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4 select-none px-[10%]">
                             {games.map((game, index) => (
-                                <Card key={index} className="flex flex-col items-center p-4">
+                                <Card imageUrl={game.image} key={index} className="flex flex-col items-center p-4">
                                     <div className="text-4xl">{game.icon}</div>
                                     <CardContent className="text-center mt-2 font-semibold">{game.name}</CardContent>
                                     <Button className="mt-2" onClick={() => setGame(game)}>Play</Button>

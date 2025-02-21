@@ -12,5 +12,6 @@ export interface GameComponentProps extends React.HTMLAttributes<HTMLDivElement>
 export interface Game {
     name: string;
     icon: string;
+    image: string;
     component: React.FC<GameComponentProps>
 }

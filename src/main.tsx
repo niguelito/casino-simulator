@@ -15,19 +15,30 @@ import { PlinkoGame } from './games/plinko/plinko.tsx';
 import BigNumber from 'bignumber.js';
 import { SicBoGame } from './games/sicbo/sicbo.tsx';
 
+import blackjack from "./assets/games/blackjack.jpg";
+import mines from "./assets/games/mines.webp";
+import slots from "./assets/games/slots.avif";
+import craps from "./assets/games/craps.jpg";
+import wheel from "./assets/games/wheel.jpg"
+import scratch from "./assets/games/scratch.jpg";
+import plinko from "./assets/games/plinko.jpg";
+import bingo from "./assets/games/bingo.webp";
+import sicbo from "./assets/games/sicbo.jpg"
+import baccarat from "./assets/games/baccarat.jpg";
+
 const ComingSoon: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => <h1 className="text-xl" {...props}>Coming Soon</h1>
 
 const games: Game[] = [
-    { name: "Blackjack", icon: "🃏", component: BlackJackGame },
-    { name: "Mines", icon: "⚒️", component: MinesGame },
-    { name: "Slots", icon: "🎰", component: SlotsGame },
-    { name: "Craps", icon: "🎲", component: CrapsGameC },
-    { name: "Wheel", icon: "🎱", component: WheelGame },
-    { name: "Scratch", icon: "👛", component: ScratchGame },
-    { name: "Plinko", icon: "🔮", component: PlinkoGame },
-    { name: "Bingo", icon: "🏞️", component: ComingSoon },
-    { name: "Sic Bo", icon: "🎲", component: SicBoGame },
-    { name: "Baccarat", icon: "🎲", component: ComingSoon }
+    { name: "Blackjack", icon: "🃏", image: blackjack, component: BlackJackGame },
+    { name: "Mines", icon: "⚒️", image: mines, component: MinesGame },
+    { name: "Slots", icon: "🎰", image: slots, component: SlotsGame },
+    { name: "Craps", icon: "🎲", image: craps, component: CrapsGameC },
+    { name: "Wheel", icon: "🎱", image: wheel, component: WheelGame },
+    { name: "Scratch", icon: "👛", image: scratch, component: ScratchGame },
+    { name: "Plinko", icon: "🔮", image: plinko, component: PlinkoGame },
+    { name: "Bingo", icon: "🏞️", image: bingo, component: ComingSoon },
+    { name: "Sic Bo", icon: "🎲", image: sicbo, component: SicBoGame },
+    { name: "Baccarat", icon: "🃏", image: baccarat, component: ComingSoon }
 ];
 
 const state = Storage.load();
