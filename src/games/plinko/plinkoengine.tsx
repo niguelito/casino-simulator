@@ -1,12 +1,13 @@
 import { Engine, Render, World, Bodies, Events, Runner, Body } from "matter-js";
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from "react";
-import b0 from "./assets/0.png";
 import b02b from "./assets/02b.png";
 import b02d from "./assets/02d.png";
 import b2 from "./assets/2.png";
 import b4 from "./assets/4.png";
 import b9 from "./assets/9.png";
 import b26 from "./assets/26.png";
+import b130 from "./assets/130.png";
+import b500 from "./assets/500.png";
 import BigNumber from "bignumber.js";
 
 export interface PlinkoEngineProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
@@ -17,15 +18,14 @@ export interface PlinkoEngineRunner {
     addBall(bid: BigNumber): void;
 }
 
-
 export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProps>(({ onResult, ...props }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [engine, setEngine] = useState<Engine | null>(null);
 
-    const multipliers = [26, 9, 4, 2, 0.2, 0.2, 0, 0, 0, 0.2, 0.2, 2, 4, 9, 26];
-    const colors = [b26, b9, b4, b2, b02d, b02b, b0, b0, b0, b02b, b02d, b2, b4, b9, b26];
+    const multipliers = [500, 130, 26, 9, 4, 2, 0.2, 0.2, 0.2, 2, 4, 9, 26, 130, 500];
+    const colors = [b500, b130, b26, b9, b4, b2, b02d, b02b, b02d, b2, b4, b9, b26, b130, b500];
 
-    const ballCollision = 0x001;
+    const ballCollision = -0x001;
     const pegsCollision = 0x002;
     const worldCollision = 0x003;
 
@@ -41,25 +41,12 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         }
     }
 
-    // function generateWall(): number {
-    //     while (true) {
-    //         var n = 450;
-    //         const randomNumber = Math.floor(Math.random() * n);
-    //         const distanceFromCenter = Math.abs(randomNumber - n);
-    //         const probability = Math.exp(-distanceFromCenter / 5);
-
-    //         if (Math.random() < probability) {
-    //             return randomNumber;
-    //         }
-    //     }
-    // }
-
     useImperativeHandle(ref, () => ({
         addBall(bid: BigNumber) {
             if (!engine) return;
             const a = `ball-${bid.toString()}`;
             console.log(a);
-            const ball = Bodies.circle(generateX(), 0, 10, { collisionFilter: { group: ballCollision, mask: pegsCollision | worldCollision }, restitution: 0.3, friction: 7, isStatic: false, label: a });
+            const ball = Bodies.circle(generateX(), 0, 11, { collisionFilter: { group: ballCollision, mask: pegsCollision | worldCollision }, restitution: 0.3, friction: 0.01, isStatic: false, label: a });
             World.add(engine.world, ball);
         }
     }));
@@ -78,8 +65,8 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
         // Create pegs in a triangular formation
         const pegs = [];
         const minCols = 3;
-        const maxCols = 17;
-        const spacing = 50;
+        const maxCols = 20;
+        const spacing = 42;
         const pinSize = 8;
 
         for (let l = minCols; l < maxCols; l++) {
@@ -145,10 +132,11 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
             }
         });
 
-        Events.on(engine, "afterTick", (e) => {
+        Events.on(engine, "afterTick", (_) => {
             World.allBodies(engine.world).forEach(body => {
                 if (body.label.startsWith("ball")) {
-                    const force = body.position.x <= 500 ? 50000 : -50000;
+                    var a = 500;
+                    const force = body.position.x <= 500 ? a : -a;
 
                     Body.applyForce(body, { x: 500, y: 500 }, { x: force, y: 0 })
                 }

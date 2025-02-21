@@ -9,12 +9,16 @@ import { cn } from "./lib/utils";
 import NumberFormatter from "./lib/NumberFormatter";
 import BigNumber from "bignumber.js";
 
-
 const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) => {
     const [game, setGame] = useState<Game | null>(null)
     const [money, setMoney] = useState<BigNumber>(state.money);
     const [lastCollected, setLastCollected] = useState<number>(state.lastCollected);
     const [blockingInput, setBlockInput] = useState(false);
+
+    window.addEventListener('beforeunload', () => {
+        save();
+    });
+    
 
     function spendMoney(n: BigNumber) {
         setMoney((m) => m.sub(n));

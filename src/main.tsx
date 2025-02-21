@@ -34,7 +34,7 @@ const state = Storage.load();
 
 try {
     BigNumber.config({
-        DECIMAL_PLACES: 40,
+        DECIMAL_PLACES: 5,
         RANGE: [-30, 5000]
     });
 } catch (err) {
