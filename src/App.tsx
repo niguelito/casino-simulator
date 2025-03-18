@@ -78,9 +78,10 @@ const HomePage: React.FC<{ games: Game[], state: State }> = ({ games, state }) =
 
             const s = Storage.parseSave(r, true);
 
-            Storage.save(s);
+            save(s);
 
-            document.location.href = './';
+            setMoney(s.money);
+            setLastCollected(s.lastCollected)
         } catch (err) {
             alert("This save could not be pased");
         }
