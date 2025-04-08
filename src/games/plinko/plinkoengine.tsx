@@ -22,7 +22,7 @@ export const PlinkoEngine = memo(forwardRef<PlinkoEngineRunner, PlinkoEngineProp
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [engine, setEngine] = useState<Engine | null>(null);
 
-    const multipliers = [500, 130, 26, 9, 4, 2, 0.2, 0.2, 0.2, 2, 4, 9, 26, 130, 500];
+    const multipliers = [50000, 130000000, 26000000, 9000000, 4000000, 2000000, 200000, 200000, 200000, 2000000, 4000000, 9000000, 26000000, 130000000, 5000000000000];
     const colors = [b500, b130, b26, b9, b4, b2, b02d, b02b, b02d, b2, b4, b9, b26, b130, b500];
 
     const ballCollision = -0x001;
