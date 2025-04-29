@@ -25,6 +25,7 @@ import plinko from "./assets/games/plinko.jpg";
 import bingo from "./assets/games/bingo.webp";
 import sicbo from "./assets/games/sicbo.jpg"
 import baccarat from "./assets/games/baccarat.jpg";
+import { BingoGame } from './games/bingo/bingo.tsx';
 
 const ComingSoon: React.FC<GameComponentProps> = ({spendMoney, earnMoney, getMoney, blockInput, exit, ...props}) => <h1 className="text-xl" {...props}>Coming Soon</h1>
 
@@ -36,7 +37,7 @@ const games: Game[] = [
     { name: "Wheel", icon: "🎱", image: wheel, component: WheelGame },
     { name: "Scratch", icon: "👛", image: scratch, component: ScratchGame },
     { name: "Plinko", icon: "🔮", image: plinko, component: PlinkoGame },
-    { name: "Bingo", icon: "🏞️", image: bingo, component: ComingSoon },
+    { name: "Bingo", icon: "🏞️", image: bingo, component: BingoGame },
     { name: "Sic Bo", icon: "🎲", image: sicbo, component: SicBoGame },
     { name: "Baccarat", icon: "🃏", image: baccarat, component: ComingSoon }
 ];

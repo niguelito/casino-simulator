@@ -1,0 +1,55 @@
+/* ./bingo/bingo.css */
+
+.bingo-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 4px;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1/1;
+    margin: auto;
+    background-color: #f0f0f0;
+    border: 4px solid #333;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.bingo-cell {
+    position: relative;
+    background-color: #ffffff;
+    border: 2px solid #888;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.bingo-cell:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.bingo-cell.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.bingo-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.bingo-number {
+    z-index: 1;
+}
